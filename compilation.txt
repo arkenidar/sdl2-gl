@@ -1,8 +1,25 @@
-## gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 && ./a
-gcc sdl2-gl.c `sdl2-config --cflags --libs` `pkg-config --cflags --libs glu` -o app && ./app
-
 # # run with:
 # source compilation.txt
+# # or
+# . compilation.txt
 # # (in project root directory)
+
+## gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 && ./a
+
+pkg-config --cflags --libs glu 1>/dev/null 2>/dev/null
+
+if [ $? -eq 0 ];
+then
+    ##echo "success"
+    GL_GLU=`pkg-config --cflags --libs glu`
+    ###gcc sdl2-gl.c `sdl2-config --cflags --libs` `pkg-config --cflags --libs glu` -o app && ./app
+else
+    ##echo "failure"
+    GL_GLU="-lopengl32 -lglu32"
+    ###gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 -o app && ./app
+fi
+
+###echo $GL_GLU
+gcc sdl2-gl.c `sdl2-config --cflags --libs` $GL_GLU -o app && ./app
 
 # pkg-config --libs glu
