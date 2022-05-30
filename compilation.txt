@@ -1,0 +1,4 @@
+gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 && ./a
+# # run with:
+# source compilation.txt
+# # (in project root directory)
