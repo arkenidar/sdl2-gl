@@ -1,4 +1,8 @@
-gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 && ./a
+## gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 && ./a
+gcc sdl2-gl.c `sdl2-config --cflags --libs` `pkg-config --cflags --libs glu` -o app && ./app
+
 # # run with:
 # source compilation.txt
 # # (in project root directory)
+
+# pkg-config --libs glu
