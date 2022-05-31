@@ -1,25 +1,55 @@
-# # run with:
-# source compilation.txt
-# # or
-# . compilation.txt
-# # (in project root directory)
+#!/usr/bin/env bash
 
+# run as:
+## ./compilation.txt && ./app
+
+# early version
 ## gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 && ./a
 
+# test for : pkg-config --cflags --libs
 pkg-config --cflags --libs glu 1>/dev/null 2>/dev/null
 
 if [ $? -eq 0 ];
 then
-    ##echo "success"
+    #echo "pkg-config --cflags --libs: success"
     GL_GLU=`pkg-config --cflags --libs glu`
+    
     ###gcc sdl2-gl.c `sdl2-config --cflags --libs` `pkg-config --cflags --libs glu` -o app && ./app
 else
-    ##echo "failure"
+    #echo "pkg-config --cflags --libs: failure"
     GL_GLU="-lopengl32 -lglu32"
+    
     ###gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 -o app && ./app
 fi
 
-###echo $GL_GLU
-gcc sdl2-gl.c `sdl2-config --cflags --libs` $GL_GLU -o app && ./app
+#echo ":: GL_GLU=$GL_GLU"
 
-# pkg-config --libs glu
+# simpler version
+###gcc sdl2-gl.c `sdl2-config --cflags --libs` $GL_GLU -o app && ./app
+
+SDL="$(sdl2-config --cflags) $(sdl2-config --libs)"
+#echo ":: SDL=$SDL"
+
+COMMAND="gcc sdl2-gl.c $SDL $GL_GLU -o app"
+#echo ":: COMMAND=$COMMAND"
+
+echo ">> $COMMAND" && $COMMAND
+
+if [ $? -eq 0 ];
+then
+	echo "compilation success"
+    #./app
+    ## ./compilation.txt && ./app # compilation, if success then run app
+    exit 0 # success
+else
+    echo "compilation failure"
+
+    echo ":: GL_GLU=$GL_GLU"
+	echo ":: SDL=$SDL"    
+	echo ":: COMMAND=$COMMAND"
+
+	echo "compilation command follows this scheme:"
+	echo "gcc app-code.c \$SDL \$GL_GLU -o app"
+
+	exit 1 # failure
+fi
