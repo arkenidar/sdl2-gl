@@ -37,7 +37,7 @@ echo ">> $COMMAND" && $COMMAND
 
 if [ $? -eq 0 ];
 then
-	echo "compilation success"
+    echo "compilation success"
     #./app
     ## ./compilation.txt && ./app # compilation, if success then run app
     exit 0 # success
@@ -45,11 +45,11 @@ else
     echo "compilation failure"
 
     echo ":: GL_GLU=$GL_GLU"
-	echo ":: SDL=$SDL"    
-	echo ":: COMMAND=$COMMAND"
+    echo ":: SDL=$SDL"    
+    echo ":: COMMAND=$COMMAND"
 
-	echo "compilation command follows this scheme:"
-	echo "gcc app-code.c \$SDL \$GL_GLU -o app"
+    echo "compilation command follows this scheme:"
+    echo "gcc app-code.c \$SDL \$GL_GLU -o app"
 
-	exit 1 # failure
+    exit 1 # failure
 fi
