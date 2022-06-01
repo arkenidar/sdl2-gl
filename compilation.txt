@@ -42,13 +42,20 @@ then
     ## ./compilation.txt && ./app # compilation, if success then run app
     exit 0 # success
 else
+    echo "================================="
     echo "compilation FAILURE"
+    echo "================================="
+
+    echo "CHECK whether this works properly: pkg-config --cflags --libs glu"
+    pkg-config --cflags --libs glu
+    
+    echo "CHECK proper value assignment of variables: GL_GLU, SDL, COMMAND"
 
     echo ":: GL_GLU=$GL_GLU"
     echo ":: SDL=$SDL"    
     echo ":: COMMAND=$COMMAND"
 
-    echo "compilation COMMAND follows this SCHEME:"
+    echo "CHECK: compilation COMMAND follows this SCHEME:"
     echo "gcc app-code.c \$SDL \$GL_GLU -o app"
 
     exit 1 # failure
