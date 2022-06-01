@@ -37,24 +37,19 @@ echo ">> $COMMAND" && $COMMAND
 
 if [ $? -eq 0 ];
 then
-	echo "compilation success"
+    echo "compilation success"
     #./app
     ## ./compilation.txt && ./app # compilation, if success then run app
     exit 0 # success
 else
     echo "compilation FAILURE"
 
-    echo "pkg-config --cflags --libs glu: check whether it works properly"
-    pkg-config --cflags --libs glu
-    
-    echo "check proper value assignment of variables"
-    echo "variable:: GL_GLU=$GL_GLU"
-	
-    echo "variable:: SDL=$SDL"    
-	echo "variable:: COMMAND=$COMMAND"
+    echo ":: GL_GLU=$GL_GLU"
+    echo ":: SDL=$SDL"    
+    echo ":: COMMAND=$COMMAND"
 
-	echo "compilation COMMAND follows this SCHEME:"
-	echo "gcc app-code.c \$SDL \$GL_GLU -o app"
+    echo "compilation COMMAND follows this SCHEME:"
+    echo "gcc app-code.c \$SDL \$GL_GLU -o app"
 
-	exit 1 # failure
+    exit 1 # failure
 fi
