@@ -7,16 +7,16 @@
 ## gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 && ./a
 
 # test for : pkg-config --cflags --libs
-pkg-config --cflags --libs glu 1>/dev/null 2>/dev/null
+pkg-config --cflags --libs glu 1>/dev/null 2>/dev/null # no stdout , no stderr
 
 if [ $? -eq 0 ];
 then
-    #echo "pkg-config --cflags --libs: success"
+    #echo "pkg-config --cflags --libs glu: success"
     GL_GLU=`pkg-config --cflags --libs glu`
     
     ###gcc sdl2-gl.c `sdl2-config --cflags --libs` `pkg-config --cflags --libs glu` -o app && ./app
 else
-    #echo "pkg-config --cflags --libs: failure"
+    #echo "pkg-config --cflags --libs glu: failure"
     GL_GLU="-lopengl32 -lglu32"
     
     ###gcc sdl2-gl.c `sdl2-config --cflags --libs` -lopengl32 -lglu32 -o app && ./app
@@ -42,13 +42,18 @@ then
     ## ./compilation.txt && ./app # compilation, if success then run app
     exit 0 # success
 else
-    echo "compilation failure"
+    echo "compilation FAILURE"
 
-    echo ":: GL_GLU=$GL_GLU"
-	echo ":: SDL=$SDL"    
-	echo ":: COMMAND=$COMMAND"
+    echo "pkg-config --cflags --libs glu: check whether it works properly"
+    pkg-config --cflags --libs glu
+    
+    echo "check proper value assignment of variables"
+    echo "variable:: GL_GLU=$GL_GLU"
+	
+    echo "variable:: SDL=$SDL"    
+	echo "variable:: COMMAND=$COMMAND"
 
-	echo "compilation command follows this scheme:"
+	echo "compilation COMMAND follows this SCHEME:"
 	echo "gcc app-code.c \$SDL \$GL_GLU -o app"
 
 	exit 1 # failure
