@@ -98,167 +98,68 @@ static void process_events( void )
 
 }
 
-void draw_cube( double scale ){
-    static GLfloat v0[] = { -1.0f, -1.0f,  1.0f };
-    static GLfloat v1[] = {  1.0f, -1.0f,  1.0f };
-    static GLfloat v2[] = {  1.0f,  1.0f,  1.0f };
-    static GLfloat v3[] = { -1.0f,  1.0f,  1.0f };
-    static GLfloat v4[] = { -1.0f, -1.0f, -1.0f };
-    static GLfloat v5[] = {  1.0f, -1.0f, -1.0f };
-    static GLfloat v6[] = {  1.0f,  1.0f, -1.0f };
-    static GLfloat v7[] = { -1.0f,  1.0f, -1.0f };
-    static GLubyte red[]    = { 255,   0,   0, 255 };
-    static GLubyte green[]  = {   0, 255,   0, 255 };
-    static GLubyte blue[]   = {   0,   0, 255, 255 };
-    static GLubyte white[]  = { 255, 255, 255, 255 };
-    static GLubyte yellow[] = {   0, 255, 255, 255 };
-    static GLubyte black[]  = {   0,   0,   0, 255 };
-    static GLubyte orange[] = { 255, 255,   0, 255 };
-    static GLubyte purple[] = { 255,   0, 255,   0 };
+// (cleaner) code import from gltest.cpp (part of https://fox-toolkit.org/)
 
-    glPushMatrix();
-    glScaled(scale,scale,scale);
+// Draws a simple box using the given corners
+void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat ymax, GLfloat zmax) {
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(0.,0.,-1.);
+    glVertex3f(xmin, ymin, zmin);
+    glVertex3f(xmin, ymax, zmin);
+    glVertex3f(xmax, ymin, zmin);
+    glVertex3f(xmax, ymax, zmin);
+  glEnd();
 
-    /* Send our triangle data to the pipeline. */
-    glBegin( GL_TRIANGLES );
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(1.,0.,0.);
+    glVertex3f(xmax, ymin, zmin);
+    glVertex3f(xmax, ymax, zmin);
+    glVertex3f(xmax, ymin, zmax);
+    glVertex3f(xmax, ymax, zmax);
+  glEnd();
 
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(0.,0.,1.);
+    glVertex3f(xmax, ymin, zmax);
+    glVertex3f(xmax, ymax, zmax);
+    glVertex3f(xmin, ymin, zmax);
+    glVertex3f(xmin, ymax, zmax);
+  glEnd();
 
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
-    glColor4ubv( white );
-    glVertex3fv( v3 );
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(-1.,0.,0.);
+    glVertex3f(xmin, ymin, zmax);
+    glVertex3f(xmin, ymax, zmax);
+    glVertex3f(xmin, ymin, zmin);
+    glVertex3f(xmin, ymax, zmin);
+  glEnd();
 
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(0.,1.,0.);
+    glVertex3f(xmin, ymax, zmin);
+    glVertex3f(xmin, ymax, zmax);
+    glVertex3f(xmax, ymax, zmin);
+    glVertex3f(xmax, ymax, zmax);
+  glEnd();
 
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(0.,-1.,0.);
+    glVertex3f(xmax, ymin, zmax);
+    glVertex3f(xmax, ymin, zmin);
+    glVertex3f(xmin, ymin, zmax);
+    glVertex3f(xmin, ymin, zmin);
+  glEnd();
+  }
 
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
 
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
+// Draw the GL scene
+void drawScene(){
 
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( white );
-    glVertex3fv( v3 );
+  int w,h;
+  SDL_GetWindowSize(window,&w,&h);
 
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
-
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
-
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-
-    glEnd( );
-
-    glPopMatrix();
-}
-
-static void draw_screen( void )
-{
-    /* Our angle of rotation. */
+      /* Our angle of rotation. */
     static float angle = 0.0f;
-
-    /*
-     * EXERCISE:
-     * Replace this awful mess with vertex
-     * arrays and a call to glDrawElements.
-     *
-     * EXERCISE:
-     * After completing the above, change
-     * it to use compiled vertex arrays.
-     *
-     * EXERCISE:
-     * Verify my windings are correct here ;).
-     */
-    /*
-    static GLfloat v0[] = { -1.0f, -1.0f,  1.0f };
-    static GLfloat v1[] = {  1.0f, -1.0f,  1.0f };
-    static GLfloat v2[] = {  1.0f,  1.0f,  1.0f };
-    static GLfloat v3[] = { -1.0f,  1.0f,  1.0f };
-    static GLfloat v4[] = { -1.0f, -1.0f, -1.0f };
-    static GLfloat v5[] = {  1.0f, -1.0f, -1.0f };
-    static GLfloat v6[] = {  1.0f,  1.0f, -1.0f };
-    static GLfloat v7[] = { -1.0f,  1.0f, -1.0f };
-    static GLubyte red[]    = { 255,   0,   0, 255 };
-    static GLubyte green[]  = {   0, 255,   0, 255 };
-    static GLubyte blue[]   = {   0,   0, 255, 255 };
-    static GLubyte white[]  = { 255, 255, 255, 255 };
-    static GLubyte yellow[] = {   0, 255, 255, 255 };
-    static GLubyte black[]  = {   0,   0,   0, 255 };
-    static GLubyte orange[] = { 255, 255,   0, 255 };
-    static GLubyte purple[] = { 255,   0, 255,   0 };
-    */
-
-    /* Clear the color and depth buffers. */
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-    /* We don't want to modify the projection matrix. */
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity( );
-
-    /* Move down the z-axis. */
-    glTranslatef( 0.0, 0.0, -5.0 );
-
-    /* Rotate. */
-    ///glRotatef( angle, 0.0, 1.0, 0.0 );
 
     if( should_rotate ) {
 
@@ -268,188 +169,94 @@ static void draw_screen( void )
 
     }
 
-    // Z-buffer // https://learnopengl.com/Advanced-OpenGL/Depth-testing
-    glEnable(GL_DEPTH_TEST);
+  const GLfloat lightPosition[]={15.,10.,5.,1.};
+  const GLfloat lightAmbient[]={.1f,.1f,.1f,1.};
+  const GLfloat lightDiffuse[]={.9f,.9f,.9f,1.};
+  const GLfloat redMaterial[]={1.,0.,0.,1.};
+  const GLfloat blueMaterial[]={0.,0.,1.,1.};
 
-//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  GLdouble width = w;
+  GLdouble height = h;
+  GLdouble aspect = height>0 ? width/height : 1.0;
 
-    //draw_cube();
-///*
+  glViewport(0,0,width,height);
+
+  glClearColor(1.0,1.0,1.0,1.0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+  glEnable(GL_DEPTH_TEST);
+
+  glDisable(GL_DITHER);
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(30.,aspect,1.,100.);
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  gluLookAt(5.,10.,15.,0.,0.,0.,0.,1.,0.);
+
+  glShadeModel(GL_SMOOTH);
+  glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHTING);
+
+  glMaterialfv(GL_FRONT, GL_AMBIENT, blueMaterial);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, blueMaterial);
+
   glPushMatrix();
   glRotated(angle, 0., 1., 0.);
-  //drawBox(-1, -1, -1, 1, 1, 1);
-  draw_cube(1);
+  drawBox(-1, -1, -1, 1, 1, 1);
 
-///*
-// 6 red outer boxes
+  glMaterialfv(GL_FRONT, GL_AMBIENT, redMaterial);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, redMaterial);
 
   glPushMatrix();
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  ///drawBox(-.5,-.5,-.5,.5,.5,.5);
-  draw_cube(0.5);
+  drawBox(-.5,-.5,-.5,.5,.5,.5);
   glPopMatrix();
 
   glPushMatrix();
   glTranslated(0.,-1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  ///drawBox(-.5,-.5,-.5,.5,.5,.5);
-  draw_cube(0.5);
+  drawBox(-.5,-.5,-.5,.5,.5,.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., 1., 0., 0.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  ///drawBox(-.5,-.5,-.5,.5,.5,.5);
-  draw_cube(0.5);
+  drawBox(-.5,-.5,-.5,.5,.5,.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., -1., 0., 0.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  ///drawBox(-.5,-.5,-.5,.5,.5,.5);
-  draw_cube(0.5);
+  drawBox(-.5,-.5,-.5,.5,.5,.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., 0., 0., 1.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  ///drawBox(-.5,-.5,-.5,.5,.5,.5);
-  draw_cube(0.5);
+  drawBox(-.5,-.5,-.5,.5,.5,.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., 0., 0., -1.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  ///drawBox(-.5,-.5,-.5,.5,.5,.5);
-  draw_cube(0.5);
+  drawBox(-.5,-.5,-.5,.5,.5,.5);
   glPopMatrix();
 
-///*/
   glPopMatrix();
 
+  SDL_GL_SwapWindow(window);
 
-    /* Send our triangle data to the pipeline. */
-  /*
-    glBegin( GL_TRIANGLES );
-
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
-
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
-
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
-
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
-
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-    glColor4ubv( blue );
-    glVertex3fv( v2 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-
-    glColor4ubv( white );
-    glVertex3fv( v3 );
-    glColor4ubv( orange );
-    glVertex3fv( v6 );
-    glColor4ubv( purple );
-    glVertex3fv( v7 );
-
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( red );
-    glVertex3fv( v0 );
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-
-    glColor4ubv( green );
-    glVertex3fv( v1 );
-    glColor4ubv( yellow );
-    glVertex3fv( v4 );
-    glColor4ubv( black );
-    glVertex3fv( v5 );
-
-    glEnd( );
-*/
-    /*
-     * EXERCISE:
-     * Draw text telling the user that 'Spc'
-     * pauses the rotation and 'Esc' quits.
-     * Do it using vetors and textured quads.
-     */
-
-    /*
-     * Swap the buffers. This this tells the driver to
-     * render the next frame from the contents of the
-     * back-buffer, and to set all rendering operations
-     * to occur on what was the front-buffer.
-     *
-     * Double buffering prevents nasty visual tearing
-     * from the application drawing on areas of the
-     * screen that are being updated at the same time.
-     */
-    //SDL_GL_SwapBuffers( ); // SDL1
-    // SDL2:
-    SDL_GL_SwapWindow(window);
-
-    /*
-    ported from SDL1 to SDL2
-https://wiki.libsdl.org/MigrationGuide
-OpenGL: If you were already using OpenGL directly, your migration is pretty simple. Change your SDL_SetVideoMode() call to SDL_CreateWindow() followed by SDL_GL_CreateContext(), and your SDL_GL_SwapBuffers() call to SDL_GL_SwapWindow(window). All the actual calls into the GL are exactly the same.
-    */
-}
+  }
 
 static void setup_opengl( int width, int height )
 {
@@ -596,7 +403,7 @@ SDL_GL_CreateContext(window);
         /* Process incoming events. */
         process_events( );
         /* Draw the screen. */
-        draw_screen( );
+        drawScene( );
 
 
         ///////--------------------- MY ADD
