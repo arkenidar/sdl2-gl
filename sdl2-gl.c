@@ -154,6 +154,7 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
 
 // Draw the GL scene
 void drawScene(){
+  glDisable(GL_CULL_FACE);
 
   int w,h;
   SDL_GetWindowSize(window,&w,&h);
