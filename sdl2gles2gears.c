@@ -1,9 +1,9 @@
 
 // (fork) [3d gears test] (after openGL) GLES 3D gears example
-
-// gcc sdl2gles2gears.c $(sdl2-config --cflags --libs) -lm -lGLESv2 -o gles && ./gles # basilar compile and run (works for me)
-
 // forked from: https://gist.github.com/DavidLudwig/d0307b81aab7f84b24e3
+
+// sudo apt install libgles2-mesa-dev # on Debian
+// gcc sdl2gles2gears.c $(sdl2-config --cflags --libs) -lm -lGLESv2 -o gles && ./gles # basilar compile and run (works for me)
 
 /*
  * Copyright (C) 1999-2001  Brian Paul   All Rights Reserved.
