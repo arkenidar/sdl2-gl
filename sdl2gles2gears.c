@@ -1,6 +1,16 @@
 
+// quick compilation:
+// gcc sdl2gles2gears.c -lm -lSDL2 -lGLESv2 -o gles && ./gles
+
 // (fork) [3d gears test] (after openGL) GLES 3D gears example
 // forked from: https://gist.github.com/DavidLudwig/d0307b81aab7f84b24e3
+/*
+ gcc source.c -lSDL2 -lGLESv2 -lm
+
+ #include <SDL2/SDL.h> // -lSDL2
+ #include <SDL2/SDL_opengles2.h> // -lGLESv2
+ #include <math.h> // -lm
+*/
 
 // sudo apt install libgles2-mesa-dev # on Debian
 // gcc sdl2gles2gears.c $(sdl2-config --cflags --libs) -lm -lGLESv2 -o gles && ./gles # basilar compile and run (works for me)
@@ -53,12 +63,12 @@
 
 #define _GNU_SOURCE
 
-#include <math.h>
+#include <math.h> // -lm
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <SDL.h>
-#include <SDL_opengles2.h>
+#include <SDL2/SDL.h> // -lSDL2
+#include <SDL2/SDL_opengles2.h> // -lGLESv2
 
 #ifndef _MSC_VER
 #include <unistd.h>
