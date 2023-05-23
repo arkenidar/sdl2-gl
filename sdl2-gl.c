@@ -432,8 +432,16 @@ SDL_GL_CreateContext(window);
 #if defined(_WIN64)
 
 #include <windows.h>
+int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow){
+ return main(__argc, __argv); }
 
-int WINAPI WinMain( HINSTANCE hInstance,    // HANDLE TO AN INSTANCE.  This is the "handle" to YOUR PROGRAM ITSELF.
+#endif
+
+#if defined(_WIN64)
+
+#include <windows.h>
+
+int WINAPI WinMain_DE_ACTIVATED( HINSTANCE hInstance,    // HANDLE TO AN INSTANCE.  This is the "handle" to YOUR PROGRAM ITSELF.
                     HINSTANCE hPrevInstance,// USELESS on modern windows (totally ignore hPrevInstance)
                     LPSTR szCmdLine,        // Command line arguments.  similar to argv in standard C programs
                     int iCmdShow )          // Start window maximized, minimized, etc.
