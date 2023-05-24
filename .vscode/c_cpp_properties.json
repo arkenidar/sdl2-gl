@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "msys-gcc (windows11)",
+            "name": "gcc",
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\msys64\\mingw64\\include",

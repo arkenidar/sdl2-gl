@@ -2,17 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb/windows) Launch app.exe in DEBUG (compile with GCC -g)",
+            "name": "(gdb) Launch app in DEBUG (compile with GCC -g)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/app.exe",
+            "program": "${workspaceFolder}/app",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Abilita la riformattazione per gdb",
