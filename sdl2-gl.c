@@ -98,6 +98,123 @@ static void process_events( void )
 
 }
 
+typedef struct {
+  float array[3];
+} vector;
+
+typedef struct {
+  vector* array;
+  int count;
+} vector_array;
+
+//vector_array vertex_positions;
+//vector_array vertex_normals;
+
+/*
+vector* vertex_position_array;
+int vertex_position_count;
+
+vector* vertex_normal_array;
+int vertex_normal_count;
+*/
+
+typedef int vector_index;
+
+typedef struct {
+  vector_index vertex_position;
+  vector_index vertex_normal;
+} vertex;
+
+typedef struct {
+  vertex array[3];
+} triangle;
+
+
+typedef struct {
+  triangle* array;
+  int count;
+} triangle_array;
+
+typedef struct {
+vector_array vertex_positions;
+vector_array vertex_normals;
+triangle_array mesh;
+} model;
+
+model load_model(){
+  model model1;
+  model1.mesh.count=0; // WIP (currently skips looping)
+  // CASE "f" (face) triangle face (when triangulated)
+  triangle triangle1;
+  
+  // indices (integers)
+  triangle1.array[0].vertex_position=0;
+  triangle1.array[0].vertex_normal=0;
+  
+  triangle1.array[1].vertex_position=0;
+  triangle1.array[1].vertex_normal=0;
+
+  triangle1.array[2].vertex_position=0;
+  triangle1.array[2].vertex_normal=0;
+
+  // ... use ... (grow array) model1.mesh.array
+  
+  // CASE "v" (vertex) position vector
+
+  vector position1;
+  position1.array[0]=0; // 3 floats
+  position1.array[1]=0;
+  position1.array[2]=0;
+  model1.vertex_positions.count=0;
+  //model1.vertex_positions.array[]=position1;
+
+  // CASE "vn" (vertex normal) normal vector
+
+  vector normal1;
+
+  return model1; // WIP needs deallocation after non-automated allocation
+}
+
+void draw_vertex(vertex v, model m){
+  vector vertex_normal=m.vertex_normals.array[v.vertex_normal];
+  glNormal3f(vertex_normal.array[0], vertex_normal.array[1], vertex_normal.array[2]);
+
+  vector vertex_position=m.vertex_positions.array[v.vertex_position];
+  glVertex3f(vertex_position.array[0],vertex_position.array[1],vertex_position.array[2]);
+}
+
+void draw_triangle(triangle t, model m){
+  draw_vertex(t.array[0],m);
+  draw_vertex(t.array[1],m);
+  draw_vertex(t.array[2],m);
+}
+
+void draw_model(model m){
+  glBegin(GL_TRIANGLES);
+    for(int i=0; i<m.mesh.count; i++)
+    draw_triangle(m.mesh.array[i],m);
+  glEnd();
+    
+  ///-- glNormal3f, glVertex3f
+  //for _,triangle in ipairs(model) do
+
+    ///glNormal3f(triangle[i].normal.x, triangle[i].normal.y, triangle[i].normal.z);
+    ///glVertex3f(triangle[i].x, triangle[i].y, triangle[i].z);
+    
+    /*
+    glNormal3f(triangle[1].normal.x, triangle[1].normal.y, triangle[1].normal.z)
+    glVertex3f(triangle[1].x, triangle[1].y, triangle[1].z)
+
+    glNormal3f(triangle[2].normal.x, triangle[2].normal.y, triangle[2].normal.z)
+    glVertex3f(triangle[2].x, triangle[2].y, triangle[2].z)
+
+    glNormal3f(triangle[3].normal.x, triangle[3].normal.y, triangle[3].normal.z)
+    glVertex3f(triangle[3].x, triangle[3].y, triangle[3].z)
+    */
+  //end
+
+}
+
 // (cleaner) code import from gltest.cpp (part of https://fox-toolkit.org/)
 
 // Draws a simple box using the given corners
@@ -153,8 +270,8 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
 
 
 // Draw the GL scene
-void drawScene(){
-  glDisable(GL_CULL_FACE);
+void drawScene(model model1){
+  //glDisable(GL_CULL_FACE);
 
   int w,h;
   SDL_GetWindowSize(window,&w,&h);
@@ -186,7 +303,7 @@ void drawScene(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   glEnable(GL_DEPTH_TEST);
 
-  glDisable(GL_DITHER);
+  //glDisable(GL_DITHER);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -208,8 +325,11 @@ void drawScene(){
 
   glPushMatrix();
   glRotated(angle, 0., 1., 0.);
+  
+  draw_model(model1);
   drawBox(-1, -1, -1, 1, 1, 1);
 
+if(0){
   glMaterialfv(GL_FRONT, GL_AMBIENT, redMaterial);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, redMaterial);
 
@@ -252,7 +372,7 @@ void drawScene(){
   glRotated(angle, 0., 1., 0.);
   drawBox(-.5,-.5,-.5,.5,.5,.5);
   glPopMatrix();
-
+}
   glPopMatrix();
 
   SDL_GL_SwapWindow(window);
@@ -395,6 +515,7 @@ SDL_GL_CreateContext(window);
      * double-buffered window for use with OpenGL.
      */
     setup_opengl( width, height );
+    model model1=load_model();
 
     /*
      * Now we want to begin our normal app process--
@@ -404,7 +525,7 @@ SDL_GL_CreateContext(window);
         /* Process incoming events. */
         process_events( );
         /* Draw the screen. */
-        drawScene( );
+        drawScene( model1 );
 
 
         ///////--------------------- MY ADD
