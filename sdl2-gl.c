@@ -34,6 +34,7 @@ pacman -S --needed mingw-w64-x86_64-SDL2 # SDL2 : sdl2-config . not : (SDL1/SDL 
 #include <stdlib.h>
 
 static GLboolean should_rotate = GL_TRUE;
+static int scene = 0;
 
 SDL_Window* window;
 
@@ -69,6 +70,12 @@ static void handle_key_down( SDL_Keysym* keysym )
     case SDLK_SPACE:
         should_rotate = !should_rotate;
         break;
+
+    case SDLK_RETURN:
+      scene++;
+      scene%=2;
+      break;
+
     default:
         break;
     }
@@ -151,18 +158,25 @@ void draw_model(model m){
   glEnd();
 }
 
+model cube;
+
+void draw_box(float scale){
+  glPushMatrix();
+  glScalef(scale,scale,scale);
+  draw_model(cube);
+  glPopMatrix();
+}
+
 // (cleaner) code import from gltest.cpp (part of https://fox-toolkit.org/)
 
 // Draws a simple box using the given corners
 void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat ymax, GLfloat zmax) {
-  glBegin(GL_TRIANGLE_STRIP);
-    glNormal3f(0.,0.,-1.);
-    glVertex3f(xmin, ymin, zmin);
-    glVertex3f(xmin, ymax, zmin);
-    glVertex3f(xmax, ymin, zmin);
-    glVertex3f(xmax, ymax, zmin);
-  glEnd();
 
+  draw_box(1);
+  
+  return;
+
+  if(1){
   glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(1.,0.,0.);
     glVertex3f(xmax, ymin, zmin);
@@ -170,15 +184,10 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
     glVertex3f(xmax, ymin, zmax);
     glVertex3f(xmax, ymax, zmax);
   glEnd();
+  }
 
-  glBegin(GL_TRIANGLE_STRIP);
-    glNormal3f(0.,0.,1.);
-    glVertex3f(xmax, ymin, zmax);
-    glVertex3f(xmax, ymax, zmax);
-    glVertex3f(xmin, ymin, zmax);
-    glVertex3f(xmin, ymax, zmax);
-  glEnd();
-
+  
+  if(1){
   glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(-1.,0.,0.);
     glVertex3f(xmin, ymin, zmax);
@@ -186,7 +195,9 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
     glVertex3f(xmin, ymin, zmin);
     glVertex3f(xmin, ymax, zmin);
   glEnd();
+  }
 
+  if(1){
   glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(0.,1.,0.);
     glVertex3f(xmin, ymax, zmin);
@@ -194,7 +205,9 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
     glVertex3f(xmax, ymax, zmin);
     glVertex3f(xmax, ymax, zmax);
   glEnd();
+  }
 
+  if(0){
   glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(0.,-1.,0.);
     glVertex3f(xmax, ymin, zmax);
@@ -203,6 +216,28 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
     glVertex3f(xmin, ymin, zmin);
   glEnd();
   }
+  
+  if(1){
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(0.,0.,1.);
+    glVertex3f(xmax, ymin, zmax);
+    glVertex3f(xmax, ymax, zmax);
+    glVertex3f(xmin, ymin, zmax);
+    glVertex3f(xmin, ymax, zmax);
+  glEnd();
+  }
+
+  if(1){
+  glBegin(GL_TRIANGLE_STRIP);
+    glNormal3f(0.,0.,-1.);
+    glVertex3f(xmin, ymin, zmin);
+    glVertex3f(xmin, ymax, zmin);
+    glVertex3f(xmax, ymin, zmin);
+    glVertex3f(xmax, ymax, zmin);
+  glEnd();
+  }
+
+}
 
 
 // Draw the GL scene
@@ -239,7 +274,7 @@ void drawScene(model model1){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   glEnable(GL_DEPTH_TEST);
 
-  //glDisable(GL_DITHER);
+  glDisable(GL_DITHER);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -262,58 +297,66 @@ void drawScene(model model1){
   glPushMatrix();
   glRotated(angle, 0., 1., 0.);
 
-  draw_model(model1);
-  ///drawBox(-1, -1, -1, 1, 1, 1);
+  if(scene==0) draw_model(model1); // WIP
+  if(scene==1) draw_box(1);
+  //drawBox(-1, -1, -1, 1, 1, 1);
 
-if(0){
+if(scene==1){
   glMaterialfv(GL_FRONT, GL_AMBIENT, redMaterial);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, redMaterial);
 
   glPushMatrix();
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  drawBox(-.5,-.5,-.5,.5,.5,.5);
+  //drawBox(-.5,-.5,-.5,.5,.5,.5);
+  draw_box(0.5);
   glPopMatrix();
 
   glPushMatrix();
   glTranslated(0.,-1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  drawBox(-.5,-.5,-.5,.5,.5,.5);
+  //drawBox(-.5,-.5,-.5,.5,.5,.5);
+  draw_box(0.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., 1., 0., 0.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  drawBox(-.5,-.5,-.5,.5,.5,.5);
+  //drawBox(-.5,-.5,-.5,.5,.5,.5);
+  draw_box(0.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., -1., 0., 0.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  drawBox(-.5,-.5,-.5,.5,.5,.5);
+  //drawBox(-.5,-.5,-.5,.5,.5,.5);
+  draw_box(0.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., 0., 0., 1.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  drawBox(-.5,-.5,-.5,.5,.5,.5);
+  //drawBox(-.5,-.5,-.5,.5,.5,.5);
+  draw_box(0.5);
   glPopMatrix();
 
   glPushMatrix();
   glRotated(90., 0., 0., -1.);
   glTranslated(0.,1.75,0.);
   glRotated(angle, 0., 1., 0.);
-  drawBox(-.5,-.5,-.5,.5,.5,.5);
+  //drawBox(-.5,-.5,-.5,.5,.5,.5);
+  draw_box(0.5);
   glPopMatrix();
+
 }
   glPopMatrix();
 
   SDL_GL_SwapWindow(window);
 
-  }
+}
 
 static void setup_opengl( int width, int height )
 {
@@ -453,6 +496,7 @@ SDL_GL_CreateContext(window);
     setup_opengl( width, height );
     
     model model1=load_model_obj("head.obj");
+    cube=load_model_obj("cube.obj");
 
     /*
      * Now we want to begin our normal app process--
