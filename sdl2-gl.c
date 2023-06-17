@@ -73,7 +73,7 @@ static void handle_key_down( SDL_Keysym* keysym )
 
     case SDLK_RETURN:
       scene++;
-      scene%=2;
+      scene%=3;
       break;
 
     default:
@@ -298,7 +298,7 @@ void drawScene(model model1){
   glRotated(angle, 0., 1., 0.);
 
   if(scene==0) draw_model(model1); // WIP
-  if(scene==1) draw_box(1);
+  if(scene==1 || scene==2) draw_box(1);
   //drawBox(-1, -1, -1, 1, 1, 1);
 
 if(scene==1){
