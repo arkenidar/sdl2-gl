@@ -5,7 +5,10 @@ ifeq (Linux,$(shell uname))
 	gcc -o app -g -Wall sdl2-gl.c $(shell sdl2-config --cflags --libs) -lGL -lGLU
 else
 	gcc -o app -g -Wall sdl2-gl.c $(shell sdl2-config --cflags --libs) -lopengl32 -lglu32 -mwindows
-endif	
+endif
 
 execute_executable:
 	./app
+
+clean:
+	rm app*
