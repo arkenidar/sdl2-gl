@@ -34,7 +34,7 @@ pacman -S --needed mingw-w64-x86_64-SDL2 # SDL2 : sdl2-config . not : (SDL1/SDL 
 #include <stdlib.h>
 
 static GLboolean should_rotate = GL_TRUE;
-static int scene = 0;
+static int scene = 1;
 
 SDL_Window* window;
 
@@ -318,6 +318,12 @@ void drawScene(model model1){
   //drawBox(-1, -1, -1, 1, 1, 1);
 
 if(scene==1){
+
+  /// https://community.khronos.org/t/shininess/18327/10
+  GLfloat black[] = { 0,0,0, 1 };
+  glLightfv(GL_LIGHT0, GL_SPECULAR, black);
+  glLightfv(GL_LIGHT0, GL_SHININESS, black);
+
   glMaterialfv(GL_FRONT, GL_AMBIENT, redMaterial);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, redMaterial);
 
