@@ -40,12 +40,10 @@
 		</Linker>
 		<Unit filename="../Makefile" />
 		<Unit filename="../README.md" />
-		<Unit filename="../cube.obj" />
-		<Unit filename="../head.obj" />
-		<Unit filename="../parse.h" />
-		<Unit filename="../sdl2-gl.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="../assets/cube.obj" />
+		<Unit filename="../assets/head.obj" />
+		<Unit filename="../src/parse.h" />
+		<Unit filename="../src/sdl2-gl.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

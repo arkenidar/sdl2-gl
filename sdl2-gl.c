@@ -517,8 +517,8 @@ SDL_GL_CreateContext(window);
      */
     setup_opengl( width, height );
 
-    model model1=load_model_obj("head.obj");
-    cube=load_model_obj("cube.obj");
+    model model1=load_model_obj("assets/head.obj");
+    cube=load_model_obj("assets/cube.obj");
 
     /*
      * Now we want to begin our normal app process--
