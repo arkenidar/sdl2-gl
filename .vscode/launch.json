@@ -3,12 +3,12 @@
     "configurations": [
         {
             "name": "(gdb) Launch app in DEBUG (compile with GCC -g)",
-            "type": "cppdbg",
+            "type": "cppdbg", // https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools
             "request": "launch",
             "program": "${workspaceFolder}/app",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

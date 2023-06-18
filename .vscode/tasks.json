@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "make",
+			"type": "make", // https://marketplace.visualstudio.com/items?itemName=carlos-algms.make-task-provider
 			"targetName": "produce_executable",
 			"makeFileRelativePath": "Makefile",
 			"problemMatcher": [],
