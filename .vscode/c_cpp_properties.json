@@ -1,15 +1,12 @@
 {
     "configurations": [
         {
-            "name": "gcc",
+            "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\msys64\\mingw64\\include",
-                "C:\\msys64\\usr\\include"
+                "C:/msys64/mingw64/include",
+                "C:/msys64/usr/include"
             ],
-            "compilerPath": "C:\\msys64\\mingw64\\bin\\gcc.exe",
-            "cStandard": "c17",
-            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4
