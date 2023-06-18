@@ -411,7 +411,7 @@ static void setup_opengl( int width, int height )
     gluPerspective( 60.0, ratio, 1.0, 1024.0 );
 }
 
-int main( int argc, char* argv[] )
+int main_example( int argc, char* argv[] )
 {
     /* Information about the current video settings. */
     ///const SDL_VideoInfo* info = NULL; // SDL1
