@@ -173,7 +173,7 @@ void draw_box(float scale){
 void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat ymax, GLfloat zmax) {
 
   draw_box(1);
-  
+
   return;
 
   if(1){
@@ -186,7 +186,7 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
   glEnd();
   }
 
-  
+
   if(1){
   glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(-1.,0.,0.);
@@ -216,7 +216,7 @@ void drawBox(GLfloat xmin, GLfloat ymin, GLfloat zmin, GLfloat xmax, GLfloat yma
     glVertex3f(xmin, ymin, zmin);
   glEnd();
   }
-  
+
   if(1){
   glBegin(GL_TRIANGLE_STRIP);
     glNormal3f(0.,0.,1.);
@@ -258,6 +258,10 @@ void drawScene(model model1){
 
     }
 
+  /// https://community.khronos.org/t/shininess/18327/10
+  glEnable(GL_COLOR_MATERIAL);
+  glColorMaterial(GL_FRONT, GL_SPECULAR);
+
   const GLfloat lightPosition[]={15.,10.,5.,1.};
   const GLfloat lightAmbient[]={.1f,.1f,.1f,1.};
   const GLfloat lightDiffuse[]={.9f,.9f,.9f,1.};
@@ -288,8 +292,20 @@ void drawScene(model model1){
   glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
   glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+
+  /// https://community.khronos.org/t/shininess/18327/10
+  GLfloat white[] = { 0.5, 0.5, 0.5, 1 };
+  glLightfv(GL_LIGHT0, GL_SPECULAR, white);
+  glLightfv(GL_LIGHT0, GL_SHININESS, white);
+
   glEnable(GL_LIGHT0);
   glEnable(GL_LIGHTING);
+
+  /// https://community.khronos.org/t/shininess/18327/10
+  GLfloat specularColor[3] = {1.0, 1.0, 1.0};
+  float g_Shine = 50.0;
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularColor);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &g_Shine);
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, blueMaterial);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, blueMaterial);
@@ -494,7 +510,7 @@ SDL_GL_CreateContext(window);
      * double-buffered window for use with OpenGL.
      */
     setup_opengl( width, height );
-    
+
     model model1=load_model_obj("head.obj");
     cube=load_model_obj("cube.obj");
 
