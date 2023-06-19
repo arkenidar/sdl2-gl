@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char* starts_with(char* string, char* what){
-  char *string_cursor=string, *what_cursor=what;
+char* starts_with(const char* string, const char* what){
+  char *string_cursor=(char*)string, *what_cursor=(char*)what;
   for(;;string_cursor++,what_cursor++){
     if(*what_cursor=='\0') return string_cursor;
     if(*what_cursor!='\0' && *string_cursor=='\0') return NULL;
@@ -25,7 +25,7 @@ void test_scanning(){
   puts("");
 }
 
-char* next_int(char* next,int* out){
+char* next_int(const char* next,int* out){
   int number=0;
   int sign=1; if(*next=='-'){ sign=-1; next++; }
   for(; *next>='0' && *next<='9'; next++){
@@ -33,9 +33,9 @@ char* next_int(char* next,int* out){
     number*=10; number+=digit;
   }
   number*=sign;
-  *out=number; return next;
+  *out=number; return (char*)next;
 }
-char* next_float(char* next,float* out){
+char* next_float(const char* next,float* out){
   float number=0; int dot=-1;
   int sign=1; if(*next=='-'){ sign=-1; next++; }
   for(; *next=='.' || (*next>='0' && *next<='9'); next++){
@@ -45,7 +45,7 @@ char* next_float(char* next,float* out){
   }
   while(0<dot--)number/=10;
   number*=sign;
-  *out=number; return next;
+  *out=number; return (char*)next;
 }
 void test_numbers(){
   puts("test_numbers()\n");
@@ -66,7 +66,7 @@ v -0.255580 2.190439 0.895723
 vn 0.4948 0.1027 0.8629
 f 420//1 14252//2 4979//3
 */
-model load_model_obj(char* file_name){ // "main.c" -> "parse.h" -> "head.obj"
+model load_model_obj(const char* file_name){ // "main.c" -> "parse.h" -> "head.obj"
 
   puts(file_name);
 
@@ -83,7 +83,7 @@ model load_model_obj(char* file_name){ // "main.c" -> "parse.h" -> "head.obj"
     char* prefix; int print=0;
 
     if( (next=starts_with(line,"v ")) ){
-      prefix="v ";
+      prefix=(char*)"v ";
       if(print) printf("FOUND: %s%s", prefix, next );
 
       loaded.vertex_positions.count++;
@@ -104,7 +104,7 @@ model load_model_obj(char* file_name){ // "main.c" -> "parse.h" -> "head.obj"
     }
     else
     if( (next=starts_with(line,"vn ")) ){
-      prefix="vn ";
+      prefix=(char*)"vn ";
       if(print) printf("FOUND: %s%s", prefix, next );
 
       loaded.vertex_normals.count++;
@@ -125,7 +125,7 @@ model load_model_obj(char* file_name){ // "main.c" -> "parse.h" -> "head.obj"
     }
     else
     if( (next=starts_with(line,"f ")) ){
-      prefix="f ";
+      prefix=(char*)"f ";
       if(print) printf("FOUND: %s%s", prefix, next );
 
       loaded.mesh.count++;
