@@ -89,7 +89,7 @@ int ParseArguments(int argc, char *argv[], int param)
 	return parameters;
 }
 
-int main(int argc, char *argv[])
+int mainOFF(int argc, char *argv[])
 {
 	Map map;
 	World world;
