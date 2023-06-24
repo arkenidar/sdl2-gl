@@ -1,14 +1,21 @@
 all: produce_executable execute_executable
 
+compiler=g++
+sources=src/*.cpp
+
+# compiler=gcc
+# sources=sdl2-gl.c
+# sources=src/sdl2-gl.cpp
+
 produce_executable:
 ifeq (Linux,$(shell uname))
-	g++ -o app -g -Wall src/*.cpp $(shell sdl2-config --cflags --libs) -lGL -lGLU
+	$(compiler) -o app -g -Wall $(sources) $(shell sdl2-config --cflags --libs) -lGL -lGLU
 else
-	g++ -o app -g -Wall src/*.cpp $(shell sdl2-config --cflags --libs) -lopengl32 -lglu32 -mwindows
+	$(compiler) -o app -g -Wall $(sources) $(shell sdl2-config --cflags --libs) -lopengl32 -lglu32 -mconsole
 endif
 
 execute_executable:
 	./app
 
 clean:
-	rm app*
+	rm -f app*
