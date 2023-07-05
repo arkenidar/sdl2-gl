@@ -1,10 +1,10 @@
 all: produce_executable execute_executable
 
-compiler=g++
-sources=src/*.cpp
+# compiler=g++
+# sources=src/*.cpp
 
-# compiler=gcc
-# sources=sdl2-gl.c
+compiler=gcc
+sources=sdl2-gl.c
 # sources=src/sdl2-gl.cpp
 
 static=-static -lcfgmgr32 -lsetupapi -lwinmm -limm32 -lole32 -loleaut32 -lversion
