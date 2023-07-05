@@ -34,7 +34,7 @@ pacman -S --needed mingw-w64-x86_64-SDL2 # SDL2 : sdl2-config . not : (SDL1/SDL 
 #include <stdlib.h>
 
 static GLboolean should_rotate = GL_TRUE;
-static int scene = 1;
+static int scene = 0;
 
 SDL_Window* window;
 
