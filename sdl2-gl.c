@@ -33,6 +33,8 @@ pacman -S --needed mingw-w64-x86_64-SDL2 # SDL2 : sdl2-config . not : (SDL1/SDL 
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <stdbool.h>
+
 static GLboolean should_rotate = GL_TRUE;
 static int scene = 0;
 
@@ -54,6 +56,7 @@ static void quit_tutorial( int code )
 
 static void handle_key_down( SDL_Keysym* keysym )
 {
+  static bool wireframe = false;
 
     /*
      * We're only interested if 'Esc' has
@@ -74,6 +77,11 @@ static void handle_key_down( SDL_Keysym* keysym )
     case SDLK_RETURN:
       scene++;
       scene%=3;
+      break;
+
+    case SDLK_w: // wire-frame toggle
+      wireframe = !wireframe;
+      glPolygonMode( GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL );
       break;
 
     default:
