@@ -310,10 +310,10 @@ void drawScene(model model1){
   glEnable(GL_LIGHTING);
 
   /// https://community.khronos.org/t/shininess/18327/10
-  GLfloat specularColor[3] = {1.0, 1.0, 1.0};
-  float g_Shine = 50.0;
+  GLfloat specularColor [3] = {1,1,1};
+  GLfloat shininess [1] = {50};
   glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularColor);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &g_Shine);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, blueMaterial);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, blueMaterial);
