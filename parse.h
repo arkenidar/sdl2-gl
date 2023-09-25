@@ -76,6 +76,7 @@ model load_model_obj(const char* file_name){ // "main.c" -> "parse.h" -> "head.o
   loaded.vertex_normals.array=NULL; loaded.vertex_normals.count=0;
 
   FILE* file = fopen(file_name,"r"); char line[1001]; char* next;
+  if(!file) { puts("could not open file!"); exit(1); }
   ///int face_data[6]={0}; float vector_data_NO_USE[3]={0};
   while(fgets(line,1001,file)){
     ///printf("%s",line);
