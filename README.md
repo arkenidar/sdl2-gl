@@ -23,3 +23,10 @@ https://marketplace.visualstudio.com/items?itemName=carlos-algms.make-task-provi
 ## Needed Libraries for MSYS with MinGW (Windows) 
 
 - install package SDL2 library: `pacman -S mingw-w64-x86_64-SDL2`
+
+## Ubuntu (maybe Debian also)
+
+- install GCC (compiler tool): `sudo apt install gcc`
+- install CMake (make tool): `sudo apt install cmake`
+- install SDL2 (media layer): `sudo apt install  libsdl2-dev libsdl2-image-dev`
+- install OpenGL (graphic layer): `sudo apt install  libgl-dev libglu-dev`
